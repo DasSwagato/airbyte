@@ -19,18 +19,18 @@ PS4="$blue_text""${BASH_SOURCE}:${LINENO}: ""$default_text"
 Help()
 {
    # Display Help
-   echo -e "This Script will download the necessary files for running docker compose"
-   echo -e "It will also run docker compose up"
+   echo -e "This Script will download the necessary files for running docker-compose"
+   echo -e "It will also run docker-compose up"
    echo -e "Take Warning! These assets may become stale over time!"
    echo
    # $0 is the currently running program
    echo -e "Syntax: $0"
    echo -e "options:"
-   echo -e "   -d --download    Only download files - don't run docker compose"
+   echo -e "   -d --download    Only download files - don't run docker-compose"
    echo -e "   -r --refresh     ${red_text}DELETE${default_text} existing assets and re-download new ones"
    echo -e "   -h --help        Print this Help."
    echo -e "   -x --debug       Verbose mode."
-   echo -e "   -b --background  Run docker compose up in detached mode."
+   echo -e "   -b --background  Run docker-compose up in detached mode."
    echo -e ""
 }
 
@@ -145,8 +145,8 @@ if test $(tput cols) -ge 64; then
 fi
 
 ########## Dependency Check ##########
-if ! docker compose version >/dev/null 2>/dev/null; then
-  echo -e "$red_text""docker compose v2 not found! please install docker compose!""$default_text"
+if ! docker-compose version >/dev/null 2>/dev/null; then
+  echo -e "$red_text""docker-compose v2 not found! please install docker-compose!""$default_text"
   exit 1
 fi
 
@@ -163,19 +163,19 @@ done
 ########## Start Docker ##########
 
 echo
-echo -e "$blue_text""Starting Docker Compose""$default_text"
+echo -e "$blue_text""Starting docker-compose""$default_text"
 
-docker compose up $dockerDetachedMode
+docker-compose up $dockerDetachedMode
 
-# $? is the exit code of the last command. So here: docker compose up
+# $? is the exit code of the last command. So here: docker-compose up
 if test $? -ne 0; then
-  echo -e "$red_text""Docker compose failed.  If you are seeing container conflicts""$default_text"
+  echo -e "$red_text""docker-compose failed.  If you are seeing container conflicts""$default_text"
   echo -e "$red_text""please consider removing old containers""$default_text"
 fi
 
 ########## Ending Docker ##########
 if [ -z "$dockerDetachedMode" ]; then
-  docker compose down
+  docker-compose down
 else
   echo -e "$blue_text""Airbyte containers are running!""$default_text"
 fi
