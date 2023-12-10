@@ -19,24 +19,24 @@ PS4="$blue_text""${BASH_SOURCE}:${LINENO}: ""$default_text"
 Help()
 {
    # Display Help
-   echo -e "This Script will download the necessary files for running podman compose"
-   echo -e "It will also run podman compose up"
+   echo -e "This Script will download the necessary files for running podman-compose"
+   echo -e "It will also run podman-compose up"
    echo -e "Take Warning! These assets may become stale over time!"
    echo
    # $0 is the currently running program
    echo -e "Syntax: $0"
    echo -e "options:"
-   echo -e "   -d --download    Only download files - don't run podman compose"
+   echo -e "   -d --download    Only download files - don't run podman-compose"
    echo -e "   -r --refresh     ${red_text}DELETE${default_text} existing assets and re-download new ones"
    echo -e "   -h --help        Print this Help."
    echo -e "   -x --debug       Verbose mode."
-   echo -e "   -b --background  Run podman compose up in detached mode."
+   echo -e "   -b --background  Run podman-compose up in detached mode."
    echo -e ""
 }
 
 ########## Declare assets care about ##########
-      docker_compose_yaml="podman compose.yaml"
-docker_compose_debug_yaml="podman compose.debug.yaml"
+      docker_compose_yaml="podman-compose.yaml"
+docker_compose_debug_yaml="podman-compose.debug.yaml"
                   dot_env=".env"
               dot_env_dev=".env.dev"
                      flags="flags.yml"
@@ -145,8 +145,8 @@ if test $(tput cols) -ge 64; then
 fi
 
 ########## Dependency Check ##########
-if ! podman compose version >/dev/null 2>/dev/null; then
-  echo -e "$red_text""podman compose v2 not found! please install podman compose!""$default_text"
+if ! podman-compose version >/dev/null 2>/dev/null; then
+  echo -e "$red_text""podman-compose v2 not found! please install podman-compose!""$default_text"
   exit 1
 fi
 
@@ -163,19 +163,19 @@ done
 ########## Start Docker ##########
 
 echo
-echo -e "$blue_text""Starting podman compose""$default_text"
+echo -e "$blue_text""Starting podman-compose""$default_text"
 
-podman compose up $dockerDetachedMode
+podman-compose up $dockerDetachedMode
 
-# $? is the exit code of the last command. So here: podman compose up
+# $? is the exit code of the last command. So here: podman-compose up
 if test $? -ne 0; then
-  echo -e "$red_text""podman compose failed.  If you are seeing container conflicts""$default_text"
+  echo -e "$red_text""podman-compose failed.  If you are seeing container conflicts""$default_text"
   echo -e "$red_text""please consider removing old containers""$default_text"
 fi
 
 ########## Ending Docker ##########
 if [ -z "$dockerDetachedMode" ]; then
-  podman compose down
+  podman-compose down
 else
   echo -e "$blue_text""Airbyte containers are running!""$default_text"
 fi
