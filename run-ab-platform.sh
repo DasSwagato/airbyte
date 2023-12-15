@@ -145,10 +145,10 @@ if test $(tput cols) -ge 64; then
 fi
 
 ########## Dependency Check ##########
-if ! podman-compose version >/dev/null 2>/dev/null; then
-  echo -e "$red_text""podman-compose v2 not found! please install podman-compose!""$default_text"
-  exit 1
-fi
+#if ! podman-compose version >/dev/null 2>/dev/null; then
+#  echo -e "$red_text""podman-compose v2 not found! please install podman-compose!""$default_text"
+#  exit 1
+#fi
 
 Download
 
